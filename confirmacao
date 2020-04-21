@@ -1,7 +1,65 @@
 #!/bin/bash
+declare -A cor=( [0]="\033[1;37m" [1]="\033[1;34m" [2]="\033[1;32m" [3]="\033[1;36m" [4]="\033[1;31m" [5]="\033[1;33m" )
+barra="\033[0m\e[34m======================================================\033[1;37m"
 
-IP=$(wget -qO- ipv4.icanhazip.com)
+fun_bar () {
+comando="$1"
+ _=$(
+$comando > /dev/null 2>&1
+) & > /dev/null
+pid=$!
+while [[ -d /proc/$pid ]]; do
+echo -ne " \033[1;33m["
+   for((i=0; i<10; i++)); do
+   echo -ne "\033[1;31m##"
+   sleep 0.2
+   done
+echo -ne "\033[1;33m]"
+sleep 1s
+echo
+tput cuu1 && tput dl1
+done
+echo -e " \033[1;33m[\033[1;31m####################\033[1;33m] - \033[1;32m100%\033[0m"
+sleep 1s
+}
+########################################################################################
 clear
+echo -e "$barra"
+echo -e " ${cor[2]}[MULTIPLO GERADOR KEY]"
+echo -e "$barra"
+########################################################################################
+panel_v15 () {
+clear
+echo -e "\033[1;36m VC ESTA PRESTE A GERAR KEY KEY PAINEL V.15 \033[0m"
+key
+echo -e "$barra"
+echo -ne "\033[1;33m Enter, Para Voltar ao Painel GERENCIADOR!\033[1;37m"; read
+gerar
+}
+########################################################################################
+panel_v23 () {
+clear
+echo -e "\033[1;36m VC ESTA PRESTE A GERAR KEY PAINEL V.23 \033[0m"
+keyv23
+echo -e "$barra"
+echo -ne "\033[1;33m Enter, Para Voltar ao Painel GERENCIADOR!\033[1;37m"; read
+gerar
+}
+########################################################################################
+vip_manger () {
+clear
+echo -e "\033[1;36m VC ESTA PRESTE A GERAR KEY VIP-VPS MANAGER \033[0m"
+keyssh
+echo -e "$barra"
+echo -ne "\033[1;33m Enter, Para Voltar ao Painel GERENCIADOR!\033[1;37m"; read
+gerar
+}
+########################################################################################
+gestor_fun () {
+echo -e "$barra"
+echo -e " ${cor[3]} **************  ${cor[2]}**************"
+echo -e "$barra"
+while true; do
 echo -e "   Painel-SSH" | figlet
 echo -e "      V.25" | figlet
 echo -e "                 \033[1;31mBy @adeilsonfi\033[1;36m"
@@ -12,3 +70,25 @@ echo -e "\033[1;36m SENHA:\033[1;37m admin\033[0m"
 echo ""
 echo -e "\033[1;33m Altere a senha quando logar no painel>> Configuracoes>> Senha Antiga: admin >> Nova Senha: \033[0m"
 echo ""
+while [[ ${opx} != @(0|[1-3]) ]]; do
+echo -ne "${cor[5]} Digite a Opcao: \033[1;37m"${cor[2]} && read opx
+tput cuu1 && tput dl1
+done
+case $opx in
+	0)
+	return;;
+	1)
+	panel_v15
+	break;;
+	2)
+	panel_v23
+	break;;
+	3)
+	vip_manger
+	break;;
+esac
+done
+}
+gestor_fun
+########################################################################################
+rm /root/confirmacao > /dev/null 2>&1
