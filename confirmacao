@@ -52,6 +52,8 @@ echo -ne "\033[1;33m Enter, Para Voltar ao Painel GERENCIADOR!\033[1;37m"; read
 gerar
 }
 ########################################################################################
+clear
+IP=$(wget -qO- ipv4.icanhazip.com)
 gestor_fun () {
 echo -e "$barra"
 while true; do
